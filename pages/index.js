@@ -4,6 +4,23 @@ import Link from 'next/link'
 import { supabase } from '../lib/supabase'
 import { hitungHPP, formatRupiah, getStatusMargin } from '../lib/kalkulasi'
 
+const BottomNav = ({ active }) => (
+  <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: 'var(--c-surface)', borderTop: '1px solid var(--c-border)', padding: '8px 0', display: 'flex', justifyContent: 'space-around', zIndex: 100 }}>
+    <Link href="/" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: active === 'produk' ? 'var(--c-text)' : 'var(--c-muted)', textDecoration: 'none', fontSize: 11, gap: 2, fontWeight: active === 'produk' ? 600 : 400 }}>
+      <span style={{ fontSize: 20 }}>📦</span>Produk
+    </Link>
+    <Link href="/dashboard" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: active === 'dashboard' ? 'var(--c-text)' : 'var(--c-muted)', textDecoration: 'none', fontSize: 11, gap: 2, fontWeight: active === 'dashboard' ? 600 : 400 }}>
+      <span style={{ fontSize: 20 }}>📊</span>Analitik
+    </Link>
+    <Link href="/simulasi" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: active === 'simulasi' ? 'var(--c-text)' : 'var(--c-muted)', textDecoration: 'none', fontSize: 11, gap: 2, fontWeight: active === 'simulasi' ? 600 : 400 }}>
+      <span style={{ fontSize: 20 }}>🧮</span>Simulasi
+    </Link>
+    <Link href="/bandingkan" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: active === 'bandingkan' ? 'var(--c-text)' : 'var(--c-muted)', textDecoration: 'none', fontSize: 11, gap: 2, fontWeight: active === 'bandingkan' ? 600 : 400 }}>
+      <span style={{ fontSize: 20 }}>⚖️</span>Bandingkan
+    </Link>
+  </div>
+)
+
 export default function Home() {
   const router = useRouter()
   const [user, setUser] = useState(null)
@@ -78,6 +95,18 @@ export default function Home() {
           </div>
         )}
 
+        {/* Shortcut ke fitur baru */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
+          <Link href="/dashboard" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8, background: 'var(--c-surface)', border: '1px solid var(--c-border)', borderRadius: 'var(--radius-md)', padding: '10px 12px', color: 'var(--c-text)' }}>
+            <span style={{ fontSize: 20 }}>📊</span>
+            <div><div style={{ fontSize: 13, fontWeight: 600 }}>Analitik</div><div style={{ fontSize: 11, color: 'var(--c-muted)' }}>Grafik & KPI</div></div>
+          </Link>
+          <Link href="/simulasi" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8, background: 'var(--c-surface)', border: '1px solid var(--c-border)', borderRadius: 'var(--radius-md)', padding: '10px 12px', color: 'var(--c-text)' }}>
+            <span style={{ fontSize: 20 }}>🧮</span>
+            <div><div style={{ fontSize: 13, fontWeight: 600 }}>Simulasi</div><div style={{ fontSize: 11, color: 'var(--c-muted)' }}>Harga optimal</div></div>
+          </Link>
+        </div>
+
         {/* Produk list */}
         <div className="flex items-center justify-between mb-4">
           <h2 style={{ fontSize: '16px', fontWeight: 600 }}>Produk Saya</h2>
@@ -112,6 +141,7 @@ export default function Home() {
           })
         )}
       </div>
+      <BottomNav active="produk" />
     </div>
   )
 }
